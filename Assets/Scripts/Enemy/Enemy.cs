@@ -10,9 +10,10 @@ public class Enemy : MonoBehaviour
 
     private Player _target;
 
+    public int Reward => _reward;
     public Player Target => _target;
 
-    public event UnityAction Dying;
+    public event UnityAction<Enemy> Dying;
 
     public void Init(Player target)
     {
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
         _health -= damage;
         if(_health <= 0)
         {
+            Dying?.Invoke(this);
             Destroy(gameObject);
         }
     }
